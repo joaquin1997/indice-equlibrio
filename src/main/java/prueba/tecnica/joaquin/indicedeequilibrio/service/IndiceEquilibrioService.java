@@ -2,8 +2,10 @@ package prueba.tecnica.joaquin.indicedeequilibrio.service;
 
 import java.util.List;
 
-import prueba.tecnica.joaquin.indicedeequilibrio.dto.IndiceEquilibrioDto;
+import org.springframework.stereotype.Service;
 
+import prueba.tecnica.joaquin.indicedeequilibrio.dto.IndiceEquilibrioDto;
+@Service
 public interface IndiceEquilibrioService {
 
 	public IndiceEquilibrioDto calcularIndiceEquilibrio(IndiceEquilibrioDto enteros);

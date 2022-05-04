@@ -1,6 +1,5 @@
 package prueba.tecnica.joaquin.indicedeequilibrio.dto.mapper;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -13,26 +12,31 @@ import prueba.tecnica.joaquin.indicedeequilibrio.model.NumerosEntity;
 
 @Mapper(componentModel = "spring")
 public interface IndiceEquilibrioMapper {
-
-	default Integer[] toListEnterosEntity(List<NumerosEntity> numerosEntity) {
+	
+	//Este mapping no se puede hacer automático así que debemos hacerlo a mano
+	default List<Integer> toListEnterosEntity(List<NumerosEntity> numerosEntity) {
 		if (numerosEntity == null) {
 			return null;
 		}
-		final List<Integer> listNumerosEntity = numerosEntity.stream().filter(Objects::nonNull)
+		//Obtenemos todos los enteros de la lista de numeros entity y los introducimos a una lista de enteros
+		 final List<Integer> listNumerosEntity = numerosEntity.stream().filter(Objects::nonNull)
 				.filter((numeroEntity) -> numeroEntity != null).map((numeroEntity) -> numeroEntity.getNumero())
 				.collect(Collectors.toList());
-		return listNumerosEntity.toArray(Integer[]::new);
+		return listNumerosEntity;
 
 	}
 
-	default List<NumerosEntity> toListNumerosEntity(Integer[] enteros) {
+	//Este mapping no se puede hacer automático así que debemos hacerlo a mano
+	default List<NumerosEntity> toListNumerosEntity(List<Integer> enteros) {
 
 		if (enteros == null) {
 			return null;
 		}
-		final List<NumerosEntity> numerosEntity = Arrays.stream(enteros).filter(Objects::nonNull).map((integer) -> {
+		
+		//Se obtienen los enteros que no sean nulos, se mapea a un NumerosEntity y lo convertimos a lista de numeros
+		final List<NumerosEntity> numerosEntity = enteros.stream().filter(Objects::nonNull).map((entero) -> {
 			NumerosEntity numeroEntity = new NumerosEntity();
-			numeroEntity.setNumero(integer);
+			numeroEntity.setNumero(entero);
 			return numeroEntity;
 		}).collect(Collectors.toList());
 

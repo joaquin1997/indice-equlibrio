@@ -21,10 +21,13 @@ public class IndiceEquilibrioServiceImpl implements IndiceEquilibrioService{
 	@Autowired
 	private IndiceEquilibrioRepository indiceEquilibrioRepository;
 	
+	@Autowired
+	private CalculadoraEquilibrio calculadoraEquilibrio;
+	
 	@Override
 	public IndiceEquilibrioDto calcularIndiceEquilibrio(IndiceEquilibrioDto indiceEquilibrioDto) {
 		
-		indiceEquilibrioDto.setIndiceEquilibrio(CalculadoraEquilibrio.calcularEquilibrio(indiceEquilibrioDto.getEnteros()));
+		indiceEquilibrioDto.setIndiceEquilibrio(calculadoraEquilibrio.calcularEquilibrio(indiceEquilibrioDto.getEnteros()));
 		
 		IndiceEquilibrioEntity indiceEquilibrioEntity = indiceEquilibrioMapper.toIndiceEquilibrioModel(indiceEquilibrioDto);
 		
