@@ -1,6 +1,6 @@
 package prueba.tecnica.joaquin.indicedeequilibrio;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +14,7 @@ public class GeneradorDatos {
 	public static IndiceEquilibrioDto getRandomIndiceEquilibrioDto() {
 		IndiceEquilibrioDto indiceEquilibrioDto = new IndiceEquilibrioDto();
 		indiceEquilibrioDto.setEnteros(getRandomList());
-		indiceEquilibrioDto.setFechaActual(LocalDate.now());
+		indiceEquilibrioDto.setFechaActual(LocalDateTime.now());
 		indiceEquilibrioDto.setIndiceEquilibrio(getRandom(1, 100));
 		
 		return indiceEquilibrioDto;
@@ -24,7 +24,7 @@ public class GeneradorDatos {
 	public static IndiceEquilibrioEntity getRandomIndiceEquilibrioEntity() {
 		IndiceEquilibrioEntity indiceEquilibrioEntity = new IndiceEquilibrioEntity();
 		indiceEquilibrioEntity.setEnteros(getNumerosEnteros(indiceEquilibrioEntity));
-		indiceEquilibrioEntity.setFechaActual(LocalDate.now());
+		indiceEquilibrioEntity.setFechaActual(LocalDateTime.now());
 		indiceEquilibrioEntity.setIndiceEquilibrio(getRandom(-1,100));
 		return indiceEquilibrioEntity;
 	}

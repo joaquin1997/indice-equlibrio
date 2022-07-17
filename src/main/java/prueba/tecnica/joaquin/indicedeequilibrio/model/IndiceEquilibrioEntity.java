@@ -1,6 +1,6 @@
 package prueba.tecnica.joaquin.indicedeequilibrio.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,8 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import lombok.Data;
-@Data
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 public class IndiceEquilibrioEntity {
     @Id
@@ -21,5 +24,5 @@ public class IndiceEquilibrioEntity {
     @OneToMany(targetEntity=NumerosEntity.class,cascade=CascadeType.ALL)
     private List<NumerosEntity> enteros;
     private Integer indiceEquilibrio;
-    private LocalDate fechaActual;
+    private LocalDateTime fechaActual;
 }

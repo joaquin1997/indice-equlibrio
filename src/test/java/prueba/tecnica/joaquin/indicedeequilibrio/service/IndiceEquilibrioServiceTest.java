@@ -1,16 +1,19 @@
 package prueba.tecnica.joaquin.indicedeequilibrio.service;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import prueba.tecnica.joaquin.indicedeequilibrio.GeneradorDatos;
@@ -29,11 +32,15 @@ public class IndiceEquilibrioServiceTest {
 	@Mock
 	private IndiceEquilibrioMapper indiceEquilibrioMapper;
 	
-	@Mock
-	private CalculadoraEquilibrio calculadoraIndiceEquilibrio;
-	
 	@InjectMocks
 	private IndiceEquilibrioServiceImpl indiceEquilibrioServiceImpl;
+	
+	@Before
+	private void setUp() {
+
+	    PowerMockito.mockStatic(CalculadoraEquilibrio.class);
+	    PowerMockito.when(CalculadoraEquilibrio.calcularEquilibrio(Mockito.any())).thenReturn(3);
+	}
 	
 	@Test
 	public void calculadoraIndiceEquilibrioService() {
@@ -41,19 +48,15 @@ public class IndiceEquilibrioServiceTest {
 		IndiceEquilibrioDto respuestaIndiceEquilibrioDto = mock(IndiceEquilibrioDto.class);
 		IndiceEquilibrioEntity indiceEquilibrioEntity = mock(IndiceEquilibrioEntity.class);
 		IndiceEquilibrioDto inicioIndiceEquilibrioDto = GeneradorDatos.getRandomIndiceEquilibrioDto();
-		
-		
+	    
 		when(indiceEquilibrioRepository.save(Mockito.any(IndiceEquilibrioEntity.class))).thenReturn(GeneradorDatos.getRandomIndiceEquilibrioEntity());
 		when(indiceEquilibrioMapper.toIndiceEquilibrioModel(Mockito.any(IndiceEquilibrioDto.class))).thenReturn(indiceEquilibrioEntity);
 		when(indiceEquilibrioMapper.toIndiceEquilibrioDto(Mockito.any(IndiceEquilibrioEntity.class))).thenReturn(respuestaIndiceEquilibrioDto);
-		when(calculadoraIndiceEquilibrio.calcularEquilibrio(Mockito.anyList())).thenReturn(3);
 
-		assertEquals(respuestaIndiceEquilibrioDto,indiceEquilibrioServiceImpl.calcularIndiceEquilibrio(inicioIndiceEquilibrioDto));
+		assertNotNull(indiceEquilibrioServiceImpl.calcularIndiceEquilibrio(inicioIndiceEquilibrioDto).getFechaActual());
 		
 		Mockito.verify(indiceEquilibrioRepository).save(Mockito.any(IndiceEquilibrioEntity.class));
 		Mockito.verify(indiceEquilibrioMapper).toIndiceEquilibrioModel(Mockito.any(IndiceEquilibrioDto.class));
-		Mockito.verify(indiceEquilibrioMapper).toIndiceEquilibrioDto(Mockito.any(IndiceEquilibrioEntity.class));
-		Mockito.verify(calculadoraIndiceEquilibrio).calcularEquilibrio(Mockito.anyList());
 		
 	}
 	
@@ -63,7 +66,7 @@ public class IndiceEquilibrioServiceTest {
 		List<IndiceEquilibrioDto> inicioIndiceEquilibrioDto = GeneradorDatos.getRandomIndiceEquilibrioDtos();
 		
 		when(indiceEquilibrioRepository.findAll()).thenReturn(GeneradorDatos.getRandomIndiceEquilibrioEntities());
-		when(indiceEquilibrioMapper.toListIndiceEquilibrioDto(Mockito.anyList())).thenReturn(inicioIndiceEquilibrioDto);
+		when(indiceEquilibrioMapper.toListIndiceEquilibrioDto(Mockito.any())).thenReturn(inicioIndiceEquilibrioDto);
 		
 		assertEquals(inicioIndiceEquilibrioDto,indiceEquilibrioServiceImpl.getIndicesEquilibrio());
 		

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import prueba.tecnica.joaquin.indicedeequilibrio.dto.IndiceEquilibrioDto;
 @Service
-public interface IndiceEquilibrioService {
+interface IndiceEquilibrioService {
 
 	public IndiceEquilibrioDto calcularIndiceEquilibrio(IndiceEquilibrioDto enteros);
 	

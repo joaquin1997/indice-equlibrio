@@ -1,8 +1,7 @@
 package prueba.tecnica.joaquin.indicedeequilibrio;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.time.LocalDate;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -27,7 +26,6 @@ class IndiceDeEquilibrioApplicationTests {
 		IndiceEquilibrioDto expectedIndiceEquilibrioDto = new IndiceEquilibrioDto();
 		expectedIndiceEquilibrioDto.setEnteros(List.of(-7, 1, 5, 2, -4, 3, 0));
 		expectedIndiceEquilibrioDto.setIndiceEquilibrio(3);
-		expectedIndiceEquilibrioDto.setFechaActual(LocalDate.now());
 		
 		indiceEquilibrioDto.setEnteros(List.of(-7, 1, 5, 2, -4, 3, 0));
 		
@@ -35,8 +33,9 @@ class IndiceDeEquilibrioApplicationTests {
 		ResponseEntity<IndiceEquilibrioDto> indiceEquilibrioDtoResponse = restEquilibrioController.postIndiceEquilibrio(indiceEquilibrioDto);
 		
 		assertEquals(indiceEquilibrioDtoExpected.getStatusCode(),indiceEquilibrioDtoResponse.getStatusCode());
-		assertEquals(indiceEquilibrioDtoExpected.getBody(),indiceEquilibrioDtoResponse.getBody());
-		
+		assertEquals(indiceEquilibrioDtoExpected.getBody().getEnteros(),indiceEquilibrioDtoResponse.getBody().getEnteros());
+		assertEquals(indiceEquilibrioDtoExpected.getBody().getIndiceEquilibrio(),indiceEquilibrioDtoResponse.getBody().getIndiceEquilibrio());
+		assertNotNull(indiceEquilibrioDto.getFechaActual());
 	}
 	
 	@Test

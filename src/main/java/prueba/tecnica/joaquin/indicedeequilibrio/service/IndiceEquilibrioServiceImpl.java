@@ -1,8 +1,10 @@
 package prueba.tecnica.joaquin.indicedeequilibrio.service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,30 +23,30 @@ public class IndiceEquilibrioServiceImpl implements IndiceEquilibrioService{
 	@Autowired
 	private IndiceEquilibrioRepository indiceEquilibrioRepository;
 	
-	@Autowired
-	private CalculadoraEquilibrio calculadoraEquilibrio;
+	public static final Logger LOGGER = LoggerFactory.getLogger(IndiceEquilibrioServiceImpl.class);
 	
 	@Override
 	public IndiceEquilibrioDto calcularIndiceEquilibrio(IndiceEquilibrioDto indiceEquilibrioDto) {
+		LOGGER.info("Initializing calcularIndiceEquilibrio");
+		indiceEquilibrioDto.setIndiceEquilibrio(CalculadoraEquilibrio.calcularEquilibrio(indiceEquilibrioDto.getEnteros()));
 		
-		indiceEquilibrioDto.setIndiceEquilibrio(calculadoraEquilibrio.calcularEquilibrio(indiceEquilibrioDto.getEnteros()));
+		indiceEquilibrioDto.setFechaActual(LocalDateTime.now());
+
+		indiceEquilibrioRepository.save(indiceEquilibrioMapper.toIndiceEquilibrioModel(indiceEquilibrioDto));
 		
-		IndiceEquilibrioEntity indiceEquilibrioEntity = indiceEquilibrioMapper.toIndiceEquilibrioModel(indiceEquilibrioDto);
-		
-		indiceEquilibrioEntity.setFechaActual(LocalDate.now());
-		
-		indiceEquilibrioDto=indiceEquilibrioMapper.toIndiceEquilibrioDto(indiceEquilibrioRepository.save(indiceEquilibrioEntity));
-		
+		LOGGER.info("Finalizing calcularIndiceEquilibrio");
 		return indiceEquilibrioDto;
 	}
 
 	@Override
 	public List<IndiceEquilibrioDto> getIndicesEquilibrio() {
+		LOGGER.info("Initializing getIndicesEquilibrio");
 
 		List<IndiceEquilibrioEntity> listIndiceEquilibrioEntity = indiceEquilibrioRepository.findAll();
 		
 		List<IndiceEquilibrioDto> listIndiceEquilibrioDto = indiceEquilibrioMapper.toListIndiceEquilibrioDto(listIndiceEquilibrioEntity);
 		
+		LOGGER.info("Finalizing getIndicesEquilibrio");
 		return listIndiceEquilibrioDto;
 	}
 	
