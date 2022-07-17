@@ -23,8 +23,8 @@ cd ./indice-de-equilibrio
 
 POST /indiceEquilibrio/calcularIndiceEquilibrio
 
-curl --location --request POST 'http://localhost:8080/indiceEquilibrio/calcularIndiceEquilibrio' \\
---header 'Content-Type: application/json' \\
+curl --location --request POST 'http://localhost:8080/indiceEquilibrio/calcularIndiceEquilibrio' \
+--header 'Content-Type: application/json' \
 --data-raw '{
     "enteros":[-7, 1, 5, 2, -4, 3, 0 ]
 }'
